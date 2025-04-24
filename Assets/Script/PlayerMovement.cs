@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody2D rb2d; 
+    private Rigidbody2D rb2d;
+
+    private Vector2 moveInput; //walk with addforce
     
     //walk left-right
     private float move;
     [SerializeField] private float speed;
-    
+  
     //Jump
     [SerializeField] private float jumpForce;
     [SerializeField] private bool isJumping;
@@ -23,10 +25,15 @@ public class PlayerMovement : MonoBehaviour
     
     void Update()
     {
+        //move with AddForce
+        moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        rb2d.AddForce (moveInput * speed);
+        
+/*
         //walk left-right
         move = Input.GetAxis("Horizontal");
         rb2d.linearVelocity = new Vector2(move * speed, rb2d.linearVelocity.y);
-        
+*/       
         //Jump
         if (Input.GetButton("Jump") && !isJumping)
         {
@@ -35,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {
