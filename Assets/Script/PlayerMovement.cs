@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
         rb2d.linearVelocity = new Vector2(move * speed, rb2d.linearVelocity.y);
         
         //Jump
-        if (Input.GetButton("Jump"))
+        if (Input.GetButton("Jump") && !isJumping)
         {
             rb2d.AddForce(new Vector2(rb2d.linearVelocity.x, jumpForce));
             Debug.Log("Jump!"); //for debugging
